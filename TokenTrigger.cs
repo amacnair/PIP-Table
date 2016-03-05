@@ -1,4 +1,18 @@
-﻿using UnityEngine;
+﻿/*
+
+Script: 	TokenTrigger
+
+Author: 	Alex MacNair
+
+Function:	Detects nearby table objects (Tektons) and triggers a call to an 
+			effect script on that object.
+
+Usage: 		This script should be applied to the effect object(s) (tokens). 
+
+*/
+
+
+using UnityEngine;
 using System.Collections;
 
 public class TokenTrigger : MonoBehaviour {
@@ -27,18 +41,6 @@ public class TokenTrigger : MonoBehaviour {
 
 		ScanObjects();
 
-		/*
-		if (other) {
-			objDist = Vector3.Distance(other.position, transform.position);
-			print("Distance to other: " + objDist);
-			if (objDist <= maxDist && objDist >= minDist) { //If object is within the min-max range
-				other.GetComponent<ScaleEffect>().Scale(2);
-			}
-			else {
-				other.GetComponent<ScaleEffect>().ResetScale(1);
-			}
-		}
-		*/
 	}
 
 	public void ScanObjects() {

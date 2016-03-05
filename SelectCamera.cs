@@ -1,4 +1,22 @@
-﻿using UnityEngine;
+﻿/*
+
+Script: 	SelectCamera
+
+Author: 	Alex MacNair
+
+Function:	Used to switch the viewpoint between cameras by enabling / disabling
+			each camera. Camera 1 the default 
+			starting camera.
+
+Usage: 		This script should be applied to a single object in the scene. The 
+			Main Camera is suggested. Each of the four audience perspective 
+			cameras must be specified in the inspector pane.
+			The function keys f1-f4 are used to select the active camera.
+
+*/
+
+
+using UnityEngine;
 using System.Collections;
 
 public class SelectCamera : MonoBehaviour {
@@ -15,12 +33,6 @@ public class SelectCamera : MonoBehaviour {
 		camera2.enabled = false;
 		camera3.enabled = false;
 		camera4.enabled = false;
-
-		//camera1.GetComponent<GUIText>().enabled = true;
-		//camera2.GetComponent<GUIText>().enabled = false;
-		//camera3.GetComponent<GUIText>().enabled = false;
-		//camera4.GetComponent<GUIText>().enabled = false;
-
 	}
 	
 	// Update is called once per frame
@@ -33,11 +45,6 @@ public class SelectCamera : MonoBehaviour {
 			camera3.enabled = false;
 			camera4.enabled = false;
 
-			//camera1.GetComponent<GUIText>().enabled = true;
-			//camera2.GetComponent<GUIText>().enabled = false;
-			//camera3.GetComponent<GUIText>().enabled = false;
-			//camera4.GetComponent<GUIText>().enabled = false;
-
 		}
 		if (Input.GetKey("f2"))
 		{
@@ -47,10 +54,6 @@ public class SelectCamera : MonoBehaviour {
 			camera3.enabled = false;
 			camera4.enabled = false;
 
-			//camera2.GetComponent<GUIText>().enabled = true;
-			//camera1.GetComponent<GUIText>().enabled = false;
-			//camera3.GetComponent<GUIText>().enabled = false;
-			//camera4.GetComponent<GUIText>().enabled = false;
 		}
 		if (Input.GetKey("f3"))
 		{
@@ -60,10 +63,6 @@ public class SelectCamera : MonoBehaviour {
 			camera2.enabled = false;
 			camera4.enabled = false;
 
-			//camera3.GetComponent<GUIText>().enabled = true;
-			//camera1.GetComponent<GUIText>().enabled = false;
-			//camera2.GetComponent<GUIText>().enabled = false;
-			//camera4.GetComponent<GUIText>().enabled = false;
 		}
 		if (Input.GetKey("f4"))
 		{
@@ -72,13 +71,6 @@ public class SelectCamera : MonoBehaviour {
 			camera1.enabled = false;
 			camera2.enabled = false;
 			camera3.enabled = false;
-
-			//camera4.GetComponent<GUIText>().enabled = true;
-			//camera1.GetComponent<GUIText>().enabled = false;
-			//camera2.GetComponent<GUIText>().enabled = false;
-			//camera3.GetComponent<GUIText>().enabled = false;
-			
-			
 		}
 	}
 }

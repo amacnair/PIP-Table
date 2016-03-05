@@ -1,9 +1,20 @@
-﻿using UnityEngine;
+﻿/*
+
+Script: 	QuitMonitor
+
+Author: 	Alex MacNair
+
+Function:	Used to quit the program.
+
+Usage: 		This script should be applied to a single object in the scene.
+			Applying the script to the Main Camera is suggested.
+
+*/
+
+using UnityEngine;
 using System.Collections;
 
 public class QuitMonitor : MonoBehaviour {
-
-	public enum QuitKey { escape, f1, f2, f3, f4, backspace, delete };
 
 	// Use this for initialization
 	void Start () {
