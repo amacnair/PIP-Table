@@ -41,10 +41,10 @@ public class ProximyTrigger : MonoBehaviour {
 			objDist = Vector3.Distance(other.position, transform.position);
 			print("Distance to other: " + objDist);
 			if (objDist <= maxDist && objDist >= minDist) { //If object is within the min-max range
-				other.GetComponent<ScaleEffect>().Scale(1.5f);
+				//Exceute activation code
 			}
 			else {
-				other.GetComponent<ScaleEffect>().ResetScale(1);
+				//Execute decativation code
 			}
 		}
 	}
