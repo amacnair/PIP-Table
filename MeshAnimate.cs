@@ -5,8 +5,9 @@ public class MeshAnimate : MonoBehaviour {
 
 	private int frameCount; //Total number of objects 
 	private float time = 0;
-	private int activeFrame = 0;
-	private bool effectActive = false;
+	public int activeFrame = 0;
+	public bool effectActive = false;
+	private bool forward = true;
 
 
 	public float frameSpeed = 0.25f; //Time delay in seconds between frames
@@ -33,20 +34,18 @@ public class MeshAnimate : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (activeFrame == frameCount-1) { effectActive = true; }
-		if (activeFrame == 0) { effectActive = false; }
+		if (activeFrame == frameCount-1) { forward = false; }
+		if (activeFrame == 0) { forward = true; }
 
-		if (effectActive) {
+		/*if (effectActive) {
 			AnimateOut();
 		}
-		else {
-			AnimateIn();
-		}
-
+		*/
 
 	}
 
 	public void AnimateIn() {
+		Debug.Log("AnimateIn!");
 		if (activeFrame < frameCount-1) {
 			time += Time.deltaTime;
 			if (time >= frameSpeed) {
@@ -75,6 +74,15 @@ public class MeshAnimate : MonoBehaviour {
 				frames[activeFrame].SetActive(true);
 				time -= frameSpeed;
 			}
+		}
+	}
+
+	public void Animate() {
+		if (forward) {
+			AnimateIn();
+		}
+		if (!forward) {
+			AnimateOut();
 		}
 	}
 }

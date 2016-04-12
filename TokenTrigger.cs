@@ -18,7 +18,7 @@ using System.Collections.Generic;
 
 public class TokenTrigger : MonoBehaviour {
 
-	public float maxDist = 3.0f;
+	public float maxDist = 6.3f;
 	public float minDist = 1.6f; 
 	public string searchTag = "Tekton";
 	public enum effects {None, Rotate, Scale, StretchX, StretchY, StretchZ };
@@ -53,7 +53,7 @@ public class TokenTrigger : MonoBehaviour {
 		}
 
 		if (!mesh.enabled) { //If the token is not active, stop it's effect(s)
-			stopEffects();
+			//stopEffects();
 		}
 	}
 
@@ -72,7 +72,7 @@ public class TokenTrigger : MonoBehaviour {
 			other = tekton.transform;
 
 
-			if (!other.GetComponent<MeshRenderer>().enabled) {
+			if (!tekton.activeSelf) {
 				//If the current tekton is hidden (off the table) don't bother to check it 
 				continue;
 			}
@@ -86,6 +86,11 @@ public class TokenTrigger : MonoBehaviour {
 
 				inRange.Add(tekton);
 
+				//doAnimateIn();
+				doAnimate();
+				
+
+				/*
 				switch(effect) {
 					case effects.None:
 						continue;
@@ -113,13 +118,14 @@ public class TokenTrigger : MonoBehaviour {
 					default:
 						continue;
 				}
+				*/
 			}
 			
 			if ( (objDist > maxDist)) {
 
 				inRange.Remove(tekton);
 
-				stopEffects();
+				//stopEffects();
 			}
 		}
 	}
@@ -161,6 +167,10 @@ public class TokenTrigger : MonoBehaviour {
 		}	
 	}
 
+
+	public void doAnimateIn() { other.GetComponent<MeshAnimate>().AnimateIn(); }
+	public void doAnimateOut() { other.GetComponent<MeshAnimate>().AnimateOut(); }
+	public void doAnimate() { other.GetComponent<MeshAnimate>().Animate(); }
 	public void doRotate() { other.GetComponent<RotateEffect>().StartRotation(); }
 	public void doScale(float n) { other.GetComponent<ScaleEffect>().Scale(n); }
 	public void doStretchX(float n) { other.GetComponent<StretchEffect>().StretchX(n); }
