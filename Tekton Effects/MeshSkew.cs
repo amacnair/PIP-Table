@@ -64,7 +64,6 @@ public class MeshSkew : MonoBehaviour {
 			for (int i = 0; i < vertices.Length; i++) {
 
 				vertices [i] += new Vector3 (vertices [i].x + (effectStrength / objMaxY/2) * vertices[i].y, 0.0f, 0.0f);
-				i++;
 			} 
 			mesh.vertices = vertices;
 			mesh.RecalculateBounds ();
