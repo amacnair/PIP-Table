@@ -60,12 +60,15 @@ public class MeshTwist : MonoBehaviour {
 	}
 
 	public void twist(){
+
+		Mesh mesh = GetComponent<MeshFilter>().mesh;
+
 		//Height of the object
 		float height = objMaxY;
 		//Maximum twist angle in degrees
 		float theta_max = twist_max;
 		//Maximum twist angle in radians
-		float theta_max = theta_max * Mathf.Deg2Rad;
+		theta_max = theta_max * Mathf.Deg2Rad;
 		//Twisting slope
 		float slope = theta_max/height;
 		//The list of verticies in the object
@@ -88,10 +91,10 @@ public class MeshTwist : MonoBehaviour {
 			float xf = d*Mathf.Cos(theta);
 			//The new z-value
 			float zf = d*Mathf.Sin(theta);
-			//Assign new x-value
-			vertices[i].x = xf;
-			//Assign new z-value
-			vertices[i].z = zf;
+
+			//Assign new x and y value
+			vertices[i] = new Vector3(xf, y, zf);
+
 		}
 	}
 }
