@@ -96,6 +96,7 @@ public class MeshTwist : MonoBehaviour {
 			vertices[i] = new Vector3(xf, y, zf);
 
 		}
+		mesh.vertices = vertices;
 		//Recalcuate the bounding volume of the mesh after modification
 		mesh.RecalculateBounds();
 	}
