@@ -5,7 +5,7 @@ public class MeshDebug : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		/*Mesh mesh = GetComponent<MeshFilter>().mesh;
+		Mesh mesh = GetComponent<MeshFilter>().mesh;
 		Vector3[] vertices = mesh.vertices;
 		float [][] verticesArray;// = new float [vertices.Length][3];
 		verticesArray = new float [vertices.Length][];
@@ -27,7 +27,7 @@ public class MeshDebug : MonoBehaviour {
 			Debug.Log (" verticesArray["+i+"] X ="+verticesArray[i][0] +" verticesArray["+i+"] Y ="+ verticesArray[i][1]+" verticesArray["+i+"] Z ="+verticesArray[i][2]+" vertexCount = " +vertexCount );
 			i++;
 		}
-*/
+
 	}
 	
 	// Update is called once per frame

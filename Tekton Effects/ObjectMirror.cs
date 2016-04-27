@@ -3,17 +3,20 @@ using System.Collections;
 
 public class ObjectMirror : MonoBehaviour {
 
+	private MeshRenderer MR;
+	private Mesh parentMesh;
+
 	private bool effectActive = false; //Use to check if the effect is already active
 
 
 	// Use this for initialization
 	void Start () {
-
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		
 	}
 
 
@@ -28,7 +31,9 @@ public class ObjectMirror : MonoBehaviour {
 			int children = transform.childCount; //We must store the starting number because the number will change as we duplicate
 
 			if (transform.childCount >= 1) { //If there is one or more child we must clone each of them
+				Debug.Log(transform.childCount);
 				for (int childNum = 0; childNum < children; childNum++) { //Loop over each child
+					Debug.Log(transform.childCount);
 					GameObject tempChild = transform.GetChild(childNum).gameObject;
 
 					Duplicate(tempChild, 0, 0.0f);
@@ -44,19 +49,13 @@ public class ObjectMirror : MonoBehaviour {
 	}
 
 
-	//--------------------------------------------------------------
-	// void RemoveClones()
-	// Stops the mirroring effect by deleting the duplicate objects
-	//--------------------------------------------------------------
-	public void RemoveClones() {
+	//-------------------------------------------------------------
+	// void Reset()
+	// Stops the mirroring effect by deleting the duplicate object
+	//-------------------------------------------------------------
+	public void Reset() {
 		if (effectActive) {
-			int children = transform.childCount;
-			for (int childNum = 0; childNum < children; childNum++) { //Loop over each child
-				if (transform.GetChild(childNum).tag == "Clone") {
-					GameObject temp = transform.GetChild(childNum).gameObject;
-					Destroy(temp);
-				}
-			}
+			//Destroy(Clone);
 			effectActive = false;
 		}
 	}
@@ -100,8 +99,6 @@ public class ObjectMirror : MonoBehaviour {
 		//Copy over the meshes and materials
 		Clone.AddComponent<MeshRenderer>().material = MR.materials[0];
 		Clone.AddComponent<MeshFilter>().mesh = parentMesh;
-
-		Clone.tag = "Clone"; //Assign tag to duplicated objects for easy removal
 
 		//Set the orignal object as the parent the clones position and roation will follow the original
 		Clone.transform.parent = gameObject.transform;
