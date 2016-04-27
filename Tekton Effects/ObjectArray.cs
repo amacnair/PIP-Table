@@ -1,47 +1,56 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ObjectMirror : MonoBehaviour {
+public class ObjectArray : MonoBehaviour {
+
 
 	private bool effectActive = false; //Use to check if the effect is already active
+
+	public int lineLength = 5; //The desired length of the LineArray function
 
 
 	// Use this for initialization
 	void Start () {
-
+		LineArray();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+	
 	}
 
-
-	//-----------------------------------------------------------------------------------
-	// void Mirror()
-	// Creates a duplicate of the object to create a "mirroring" effect along the x-axis
-	//-----------------------------------------------------------------------------------
-	public void Mirror() {
-
+	//---------------------------------------------------------
+	// void LineArray()
+	// Creates a 1 x n array by duplicating the orignal object
+	//---------------------------------------------------------
+	public void LineArray() {
 		if (!effectActive) { //Check that the effect is not already active
 
-			int children = transform.childCount; //We must store the starting number because the number will change as we duplicate
-
-			if (transform.childCount >= 1) { //If there is one or more child we must clone each of them
+			for (int n = 1; n < lineLength; n++) { //Loop over the number of desired objects in the line
+				int children = transform.childCount; //We must store the starting number because the number will change as we duplicate
+				if (transform.childCount >= 1) { //If there is one or more child we must clone each of them
 				for (int childNum = 0; childNum < children; childNum++) { //Loop over each child
 					GameObject tempChild = transform.GetChild(childNum).gameObject;
-
-					Duplicate(tempChild, 0, 0.0f);
+					Duplicate(tempChild, 0, 1.0f);
 				}
 			}
 
 			else {
-				Duplicate(gameObject, 0, 0.0f);
+				Duplicate(gameObject, 0, 1.0f);
 			}
+			}
+
+			
 
 			effectActive = true; //Set the effect active flag to true
 		}
 	}
+
+
+	public void GridArray() {
+
+	}
+	
 
 
 	//--------------------------------------------------------------
@@ -60,6 +69,7 @@ public class ObjectMirror : MonoBehaviour {
 			effectActive = false;
 		}
 	}
+
 
 
 	//------------------------------------------------------------------------------------
