@@ -29,19 +29,15 @@ public class ObjectArray : MonoBehaviour {
 			for (int n = 1; n < lineLength; n++) { //Loop over the number of desired objects in the line
 				int children = transform.childCount; //We must store the starting number because the number will change as we duplicate
 				if (transform.childCount >= 1) { //If there is one or more child we must clone each of them
-				for (int childNum = 0; childNum < children; childNum++) { //Loop over each child
-					GameObject tempChild = transform.GetChild(childNum).gameObject;
-					Duplicate(tempChild, 0, 1.0f);
+					for (int childNum = 0; childNum < children; childNum++) { //Loop over each child
+						GameObject tempChild = transform.GetChild(childNum).gameObject;
+						Duplicate(tempChild, 0, 1.0f);
+					}
+				}
+				else {
+					Duplicate(gameObject, 0, 1.0f);
 				}
 			}
-
-			else {
-				Duplicate(gameObject, 0, 1.0f);
-			}
-			}
-
-			
-
 			effectActive = true; //Set the effect active flag to true
 		}
 	}
@@ -91,13 +87,13 @@ public class ObjectArray : MonoBehaviour {
 		//Copy over the transform information from the parent object
 		switch(axis) {
 			case 0:
-				Clone.transform.position = (parent.transform.position + new Vector3(parent.transform.localScale.x + padding, 0, 0)); //Shift the clone along the positive x-axis
+				Clone.transform.position = (parent.transform.position + new Vector3(parent.GetComponent<MeshRenderer>().bounds.extents.x + padding, 0, 0)); //Shift the clone along the positive x-axis
 				break;
 			case 1:
-				Clone.transform.position = (parent.transform.position + new Vector3(0, parent.transform.localScale.y + padding, 0)); //Shift the clone along the positive y-axis
+				Clone.transform.position = (parent.transform.position + new Vector3(0, parent.GetComponent<MeshRenderer>().bounds.extents.y + padding, 0)); //Shift the clone along the positive y-axis
 				break;
 			case 2:
-				Clone.transform.position = (parent.transform.position + new Vector3(0, 0, parent.transform.localScale.z + padding)); //Shift the clone along the positive z-axis
+				Clone.transform.position = (parent.transform.position + new Vector3(0, 0, parent.GetComponent<MeshRenderer>().bounds.extents.z + padding)); //Shift the clone along the positive z-axis
 				break;
 			default:
 				Debug.Log("Error axis value out of range 0-2!");

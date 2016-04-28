@@ -81,13 +81,13 @@ public class ObjectMirror : MonoBehaviour {
 		//Copy over the transform information from the parent object
 		switch(axis) {
 			case 0:
-				Clone.transform.position = (parent.transform.position + new Vector3(parent.transform.localScale.x + padding, 0, 0)); //Shift the clone along the positive x-axis
+				Clone.transform.position = (parent.transform.position + new Vector3(parent.GetComponent<MeshRenderer>().bounds.extents.x + padding, 0, 0)); //Shift the clone along the positive x-axis
 				break;
 			case 1:
-				Clone.transform.position = (parent.transform.position + new Vector3(0, parent.transform.localScale.y + padding, 0)); //Shift the clone along the positive y-axis
+				Clone.transform.position = (parent.transform.position + new Vector3(0, parent.GetComponent<MeshRenderer>().bounds.extents.y + padding, 0)); //Shift the clone along the positive y-axis
 				break;
 			case 2:
-				Clone.transform.position = (parent.transform.position + new Vector3(0, 0, parent.transform.localScale.z + padding)); //Shift the clone along the positive z-axis
+				Clone.transform.position = (parent.transform.position + new Vector3(0, 0, parent.GetComponent<MeshRenderer>().bounds.extents.z + padding)); //Shift the clone along the positive z-axis
 				break;
 			default:
 				Debug.Log("Error axis value out of range 0-2!");
