@@ -21,7 +21,7 @@ public class TokenTrigger : MonoBehaviour {
 	public float maxDist = 6.3f;
 	public float minDist = 1.6f; 
 	public string searchTag = "Tekton";
-	public enum effects {None, Rotate, Scale, StretchX, StretchY, StretchZ };
+	public enum effects {None, Spin, Scale, StretchX, StretchY, StretchZ, Mirror, LineArray };
 
 	public effects effect = effects.None;
 
@@ -53,7 +53,7 @@ public class TokenTrigger : MonoBehaviour {
 		}
 
 		if (!mesh.enabled) { //If the token is not active, stop it's effect(s)
-			//stopEffects();
+			stopEffects();
 		}
 	}
 
@@ -86,16 +86,12 @@ public class TokenTrigger : MonoBehaviour {
 
 				inRange.Add(tekton);
 
-				//doAnimateIn();
-				doAnimate();
 				
-
-				/*
 				switch(effect) {
 					case effects.None:
 						continue;
 
-					case effects.Rotate:
+					case effects.Spin:
 						doRotate();
 						continue;
 
@@ -115,17 +111,24 @@ public class TokenTrigger : MonoBehaviour {
 						doStretchZ(2.0f);
 						continue;
 
+					case effects.Mirror:
+						doMirror();
+						continue;
+
+					case effects.LineArray:
+						doArrayLine();
+						continue;
+
 					default:
 						continue;
 				}
-				*/
 			}
 			
 			if ( (objDist > maxDist)) {
 
 				inRange.Remove(tekton);
 
-				//stopEffects();
+				stopEffects();
 			}
 		}
 	}
@@ -141,7 +144,7 @@ public class TokenTrigger : MonoBehaviour {
 				case effects.None:
 					return;
 
-				case effects.Rotate:
+				case effects.Spin:
 					endRotate();
 					return;
 
@@ -160,7 +163,15 @@ public class TokenTrigger : MonoBehaviour {
 				case effects.Scale:
 					endScale();
 					return;
-				
+
+				case effects.Mirror:
+						endMirror();
+						continue;
+
+				case effects.LineArray:
+					endArrayLine();
+					continue;
+			
 				default: 
 					return;
 			}
@@ -168,14 +179,14 @@ public class TokenTrigger : MonoBehaviour {
 	}
 
 
-	public void doAnimateIn() { other.GetComponent<MeshAnimate>().AnimateIn(); }
-	public void doAnimateOut() { other.GetComponent<MeshAnimate>().AnimateOut(); }
-	public void doAnimate() { other.GetComponent<MeshAnimate>().Animate(); }
+	
 	public void doRotate() { other.GetComponent<RotateEffect>().StartRotation(); }
 	public void doScale(float n) { other.GetComponent<ScaleEffect>().Scale(n); }
 	public void doStretchX(float n) { other.GetComponent<StretchEffect>().StretchX(n); }
 	public void doStretchY(float n) { other.GetComponent<StretchEffect>().StretchY(n); }
 	public void doStretchZ(float n) { other.GetComponent<StretchEffect>().StretchZ(n); }
+	public void doMirror() { other.GetComponent<ObjectMirror>().Mirror(); }
+	public void doArrayLine() { other.GetComponent<ObjectArray>().LineArray(); }
 
 
 	public void endRotate() { other.GetComponent<RotateEffect>().StopRotation(); }
@@ -183,5 +194,7 @@ public class TokenTrigger : MonoBehaviour {
 	public void endStretchX() { other.GetComponent<StretchEffect>().ResetStretchX(); }
 	public void endStretchY() { other.GetComponent<StretchEffect>().ResetStretchY(); }
 	public void endStretchZ() { other.GetComponent<StretchEffect>().ResetStretchZ(); }
+	public void endMirror() { other.GetComponent<ObjectMirror>().RemoveClones(); }
+	public void endArrayLine() { other.GetComponent<ObjectArray>().RemoveClones(); }
 }
 
