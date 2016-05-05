@@ -3,6 +3,8 @@ using System.Collections;
 
 public class MeshTwist : MonoBehaviour {
 
+	private bool effectActive = false; //Use to check if the effect is already active
+
 	public float effectStrength = 1.0f;
 
 	private float objMaxX;
@@ -60,44 +62,44 @@ public class MeshTwist : MonoBehaviour {
 	}
 
 	public void twist(){
+		if (!effectActive) {
+			
+			Mesh mesh = GetComponent<MeshFilter> ().mesh;
 
-		Mesh mesh = GetComponent<MeshFilter>().mesh;
+			//Height of the object
+			float H = objMaxY;
+			//Maximum twist angle in degrees
+			float theta_max = twist_max;
+			//Maximum twist angle in radians
+			theta_max = theta_max * Mathf.Deg2Rad;
+			//Twisting slope
+			float slope = theta_max/H;
+			//The list of verticies in the object
+			Vector3[] vertices = mesh.vertices;
+			//For each vertex in the list of verticies
+			for (int i=0; i < vertices.Length; i++) {
+				//3-dimensional vertex of shape (0,3)
+				Vector3 vertex = vertices[i];
+				//The horizontal x-value of the vertex
+				float x = vertex.x;
+				//The vertical y-value of the vertex
+				float y = vertex.y;
+				//The horizontal z-value of the vertex
+				float z = vertex.z;
+				//The amount to twist the point wrt origin [radians]
+				float theta = theta_max*((y/H)+0.5f);
+				//The new x-value
+				float xf = x*Mathf.Cos(theta)+z*Mathf.Sin(theta);
+				//The new z-value
+				float zf = z*Mathf.Cos(theta)-x*Mathf.Sin(theta);
+				//Assign new x and y value
+				vertices[i] = new Vector3(xf, y, zf);
 
-		//Height of the object
-		float height = objMaxY;
-		//Maximum twist angle in degrees
-		float theta_max = twist_max;
-		//Maximum twist angle in radians
-		theta_max = theta_max * Mathf.Deg2Rad;
-		//Twisting slope
-		float slope = theta_max/height;
-		//The list of verticies in the object
-		Vector3[] vertices = mesh.vertices;
-		//For each vertex in the list of verticies
-		for (int i=0; i < vertices.Length; i++) {
-			//3-dimensional vertex of shape (0,3)
-			Vector3 vertex = vertices[i];
-			//The horizontal x-value of the vertex
-			float x = vertex.x;
-			//The vertical y-value of the vertex
-			float y = vertex.y;
-			//The horizontal z-value of the vertex
-			float z = vertex.z;
-			//The scaler distance away from the origin
-			float d = vertex.magnitude;
-			//The amount to twist the point wrt origin [radians]
-			float theta = slope*y;
-			//The new x-value
-			float xf = d*Mathf.Cos(theta);
-			//The new z-value
-			float zf = d*Mathf.Sin(theta);
-
-			//Assign new x and y value
-			vertices[i] = new Vector3(xf, y, zf);
-
+			}
+			mesh.vertices = vertices;
+			//Recalcuate the bounding volume of the mesh after modification
+			mesh.RecalculateBounds();
+			effectActive = true;
 		}
-		mesh.vertices = vertices;
-		//Recalcuate the bounding volume of the mesh after modification
-		mesh.RecalculateBounds();
 	}
 }
