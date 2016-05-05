@@ -5,6 +5,9 @@ public class MeshSinusoid : MonoBehaviour {
 	//This class causes an object to morph into 
 	//the shape of a sinusoid.
 
+	private bool effectActive = false; //Use to check if the effect is already active
+
+
 	//Initialise the effect strength
 	//1.0 by default
 	public float effectStrength = 1.0f;
@@ -65,52 +68,55 @@ public class MeshSinusoid : MonoBehaviour {
 	}
 
 	public void sinusoid() {
+		if (!effectActive) {
+			Mesh mesh = GetComponent<MeshFilter> ().mesh;
+			Vector3[] vertices = mesh.vertices;
+			//Amplitude percentage of width
+			float percent = amplitude_percentage;
 
-		Mesh mesh = GetComponent<MeshFilter>().mesh;
-		Vector3[] vertices = mesh.vertices;
-		//Amplitude percentage of width
-		float percent = amplitude_percentage;
+			//The width of the object
+			float width = objMaxX;
 
-		//The width of the object
-		float width = objMaxX;
+			//The max vertex translation
+			//Absolute amplitude
+			float dx_max = width * percent;
 
-		//The max vertex translation
-		//Absolute amplitude
-		float dx_max = width * percent;
+			//We want the whole body to resemble
+			//one sinusoidal cycle, thus the 
+			//positive max y should resemble pi, 
+			//and the negative max y should resemble 
+			//negative pi, so we should non-dimensoinalise
+			//the y-values in the context of this function.
+			//The half height of the object:
+			float half_height = objMaxY / 2.0f;
+			//Thus the sinusoid function can be
+			//constructed with the form:
+			//dx(y)=dx_max*sin(y)
 
-		//We want the whole body to resemble
-		//one sinusoidal cycle, thus the 
-		//positive max y should resemble pi, 
-		//and the negative max y should resemble 
-		//negative pi, so we should non-dimensoinalise
-		//the y-values in the context of this function.
-		//The half height of the object:
-		float half_height = objMaxY / 2.0f;
-		//Thus the sinusoid function can be
-		//constructed with the form:
-		//dx(y)=dx_max*sin(y)
+			//Iterate through each vertex
+			for (int i = 0; i < vertices.Length; i++) {
+				//The vertex
+				Vector3 vertex = vertices [i];
+				//The x-value of the vertex
+				float x = vertex.x;
+				//The y-value of the vertex
+				float y = vertex.y;
+				//Percent along y wrt half_height
+				float percent_y = y / half_height;
+				//Cooresponding radian phase representation
+				float phase = percent_y * Mathf.PI;
+				//Amount to shift x accourding to y
+				float dx = dx_max * Mathf.Sin (phase);
+				//Instantiate the change to the vertex
+				float xf = x + dx;
 
-		//Iterate through each vertex
-		for (int i=0; i < vertices.Length; i++){
-			//The vertex
-			Vector3 vertex = vertices[i];
-			//The x-value of the vertex
-			float x = vertex.x;
-			//The y-value of the vertex
-			float y = vertex.y;
-			//Percent along y wrt half_height
-			float percent_y = y / half_height;
-			//Cooresponding radian phase representation
-			float phase = percent_y * Mathf.PI;
-			//Amount to shift x accourding to y
-			float dx = dx_max * Mathf.Sin(phase);
-			//Instantiate the change to the vertex
-			float xf = x + dx;
-
-			//Assign new value
-			vertices[i] = new Vector3(xf, vertex.y, vertex.z);
-			//Both the top and bottom of the object 
-			//should appear to be unchanged
+				//Assign new value
+				vertices [i] = new Vector3 (xf, vertex.y, vertex.z);
+				//Both the top and bottom of the object 
+				//should appear to be unchanged
+			}
+			mesh.vertices = vertices;
+			effectActive = true;
 		}
 	}
 }
