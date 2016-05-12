@@ -24,7 +24,7 @@ public class ObjectMirror : MonoBehaviour {
 	public void Mirror() {
 
 		if (!effectActive) { //Check that the effect is not already active
-
+			effectActive = true; //Set the effect active flag to true
 			int children = transform.childCount; //We must store the starting number because the number will change as we duplicate
 
 			if (transform.childCount >= 1) { //If there is one or more child we must clone each of them

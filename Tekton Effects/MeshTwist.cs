@@ -29,6 +29,8 @@ public class MeshTwist : MonoBehaviour {
 		Vector3[] vertices = mesh.vertices;
 
 		for (int i = 0; i < vertices.Length; i++) {
+			if (vertices[i].x < minX) { minX = vertices[i].x; } 
+			if (vertices[i].x > maxX) { maxX = vertices[i].x; }
 			if (vertices[i].y < minY) { minY = vertices[i].y; } 
 			if (vertices[i].y > maxY) { maxY = vertices[i].y; }
 			if (vertices[i].z < minZ) { minZ = vertices[i].z; } 
