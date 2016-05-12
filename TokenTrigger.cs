@@ -21,7 +21,7 @@ public class TokenTrigger : MonoBehaviour {
 	public float maxDist = 6.3f;
 	public float minDist = 1.6f; 
 	public string searchTag = "Tekton";
-	public enum effects {None, Spin, Scale, StretchX, StretchY, StretchZ, Mirror, LineArray };
+	public enum effects {None, Scale, StretchX, StretchY, StretchZ, Skew, Mirror, Twist, LineArray, Sinusoid, Transparency };
 
 	public effects effect = effects.None;
 
@@ -91,10 +91,6 @@ public class TokenTrigger : MonoBehaviour {
 					case effects.None:
 						continue;
 
-					case effects.Spin:
-						doRotate();
-						continue;
-
 					case effects.Scale:
 						doScale(1.5f);
 						continue;
@@ -111,14 +107,32 @@ public class TokenTrigger : MonoBehaviour {
 						doStretchZ(2.0f);
 						continue;
 
+					case effects.Skew:
+						doSkew();
+						continue;
+
 					case effects.Mirror:
 						doMirror();
+						continue;
+
+					case effects.Twist:
+						doTwist();
 						continue;
 
 					case effects.LineArray:
 						doArrayLine();
 						continue;
 
+					case effects.Sinusoid:
+						doSinusoid();
+						continue;
+
+					/*
+					Not yet implemented
+					case effects.Transparency:
+						doTransparency();
+						continue;
+					*/
 					default:
 						continue;
 				}
@@ -142,59 +156,79 @@ public class TokenTrigger : MonoBehaviour {
 
 			switch(effect) {
 				case effects.None:
-					return;
-
-				case effects.Spin:
-					endRotate();
-					return;
-
-				case effects.StretchX:
-					endStretchX();
-					return;
-
-				case effects.StretchY:
-					endStretchY();
-					return;
-
-				case effects.StretchZ:
-					endStretchZ();
-					return;
+					continue;
 
 				case effects.Scale:
 					endScale();
-					return;
+					continue;
+
+				case effects.StretchX:
+					endStretchX();
+					continue;
+
+				case effects.StretchY:
+					endStretchY();
+					continue;
+
+				case effects.StretchZ:
+					endStretchZ();
+					continue;
+
+				case effects.Skew:
+					endSkew();
+					continue;
 
 				case effects.Mirror:
-						endMirror();
-						continue;
+					endMirror();
+					continue;
+
+				case effects.Twist:
+					endTwist();
+					continue;
 
 				case effects.LineArray:
 					endArrayLine();
 					continue;
-			
-				default: 
-					return;
+
+				case effects.Sinusoid:
+					endSinusoid();
+					continue;
+
+				/*
+				Not yet implemented
+				case effects.Transparency:
+					endTransparency();
+					continue;
+					
+				*/
+				default:
+					continue;
 			}
 		}	
 	}
 
 
 	
-	public void doRotate() { other.GetComponent<RotateEffect>().StartRotation(); }
+
 	public void doScale(float n) { other.GetComponent<ScaleEffect>().Scale(n); }
 	public void doStretchX(float n) { other.GetComponent<StretchEffect>().StretchX(n); }
 	public void doStretchY(float n) { other.GetComponent<StretchEffect>().StretchY(n); }
 	public void doStretchZ(float n) { other.GetComponent<StretchEffect>().StretchZ(n); }
+	public void doSkew() { other.GetComponent<MeshSkew>().Skew(); }
 	public void doMirror() { other.GetComponent<ObjectMirror>().Mirror(); }
+	public void doTwist() { other.GetComponent<MeshTwist>().Twist() ; }
 	public void doArrayLine() { other.GetComponent<ObjectArray>().LineArray(); }
+	public void doSinusoid() { other.GetComponent<MeshSinusoid>().Sinusoid(); }
 
 
-	public void endRotate() { other.GetComponent<RotateEffect>().StopRotation(); }
 	public void endScale() { other.GetComponent<ScaleEffect>().ResetScale(); }
 	public void endStretchX() { other.GetComponent<StretchEffect>().ResetStretchX(); }
 	public void endStretchY() { other.GetComponent<StretchEffect>().ResetStretchY(); }
 	public void endStretchZ() { other.GetComponent<StretchEffect>().ResetStretchZ(); }
+	public void endSkew() { other.GetComponent<MeshSkew>().ResetSkew(); }
 	public void endMirror() { other.GetComponent<ObjectMirror>().RemoveClones(); }
+	public void endTwist() { other.GetComponent<MeshTwist>().ResetTwist() ; }
 	public void endArrayLine() { other.GetComponent<ObjectArray>().RemoveClones(); }
+	public void endSinusoid() { other.GetComponent<MeshSinusoid>().ResetSinusoid(); }
 }
 

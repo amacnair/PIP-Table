@@ -34,6 +34,9 @@ public class SelectCamera : MonoBehaviour {
 	private int deltaFrames = 0;
 
 	private bool helpTextEnabled = false;
+	private bool debugModeEnabled = false;
+
+	private GameObject[] tokens; //Stores a list of every token in the scene
 
 
 	// Use this for initialization
@@ -56,6 +59,8 @@ public class SelectCamera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		++deltaFrames;
+
+
 		if (Input.GetKey("c") && (deltaFrames > 8)) {
 			Debug.Log("Enabing help text");
 			if (helpTextEnabled == false) {
@@ -75,7 +80,27 @@ public class SelectCamera : MonoBehaviour {
 				helpTextEnabled = false;
 				deltaFrames = 0;
 			}
+		}
 
+		if (Input.GetKey("d")) {
+
+			if (!debugModeEnabled) {
+				Debug.Log("Enabling debug mode!");
+			
+				tokens = GameObject.FindGameObjectsWithTag("Token"); //Populate array with all token objects
+				foreach (GameObject token in tokens) {
+					token.GetComponent<MeshRenderer>().enabled = true;
+				}
+				debugModeEnabled = true;
+			}
+			else {
+				Debug.Log("Disabling debug mode!");
+				tokens = GameObject.FindGameObjectsWithTag("Token"); //Populate array with all token objects
+				foreach (GameObject token in tokens) {
+					token.GetComponent<MeshRenderer>().enabled = false;
+				}
+				debugModeEnabled = false;
+			}
 
 		}
 
