@@ -8,9 +8,6 @@ public class MeshSinusoid : MonoBehaviour {
 	private bool effectActive = false; //Use to check if the effect is already active
 
 
-	//Initialise the effect strength
-	//1.0 by default
-	public float effectStrength = 1.0f;
 	//Initialise the objects max vertex values
 	//For x, y, and z
 	private float objMaxX;
@@ -35,25 +32,14 @@ public class MeshSinusoid : MonoBehaviour {
 
 		Mesh mesh = GetComponent<MeshFilter>().mesh;
 		Vector3[] vertices = mesh.vertices;
+
 		for (int i = 0; i < vertices.Length; i++) {
-			if (vertices[i].x < minX) {
-				minX = vertices[i].x;
-			} 
-			if (vertices[i].x > maxX){
-				maxX = vertices[i].x;
-			}
-			if (vertices[i].y < minY) {
-				minY = vertices[i].y;
-			} 
-			if (vertices[i].y > maxY){
-				maxY = vertices[i].y;
-			}
-			if (vertices[i].z < minZ) {
-				minZ = vertices[i].z;
-			} 
-			if (vertices[i].y > maxZ){
-				maxZ = vertices[i].z;
-			}
+			if (vertices[i].x < minX) {	minX = vertices[i].x; } 
+			if (vertices[i].x > maxX) { maxX = vertices[i].x; }
+			if (vertices[i].y < minY) { minY = vertices[i].y; } 
+			if (vertices[i].y > maxY) { maxY = vertices[i].y; }
+			if (vertices[i].z < minZ) { minZ = vertices[i].z; } 
+			if (vertices[i].y > maxZ) { maxZ = vertices[i].z; }
 		}
 
 		objMaxX = Mathf.Abs (maxX) + Mathf.Abs (minX);
@@ -64,18 +50,17 @@ public class MeshSinusoid : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		sinusoid ();
+
 	}
 
-	public void sinusoid() {
+	public void Sinusoid() {
 		if (!effectActive) {
 			Mesh mesh = GetComponent<MeshFilter> ().mesh;
 			Vector3[] vertices = mesh.vertices;
 			//Amplitude percentage of width
 			float percent = amplitude_percentage;
 
-			//The width of the object
-			float width = objMaxX;
+			float width = objMaxX; //The width of the object
 
 			//The max vertex translation
 			//Absolute amplitude
@@ -89,34 +74,37 @@ public class MeshSinusoid : MonoBehaviour {
 			//the y-values in the context of this function.
 			//The half height of the object:
 			float half_height = objMaxY / 2.0f;
+
 			//Thus the sinusoid function can be
 			//constructed with the form:
 			//dx(y)=dx_max*sin(y)
 
 			//Iterate through each vertex
 			for (int i = 0; i < vertices.Length; i++) {
-				//The vertex
-				Vector3 vertex = vertices [i];
-				//The x-value of the vertex
-				float x = vertex.x;
-				//The y-value of the vertex
-				float y = vertex.y;
-				//Percent along y wrt half_height
-				float percent_y = y / half_height;
-				//Cooresponding radian phase representation
-				float phase = percent_y * Mathf.PI;
-				//Amount to shift x accourding to y
-				float dx = dx_max * Mathf.Sin (phase);
-				//Instantiate the change to the vertex
-				float xf = x + dx;
+				Vector3 vertex = vertices [i]; //The vertex
+				
+				float x = vertex.x; //The x-value of the vertex
+				float y = vertex.y; //The y-value of the vertex
 
-				//Assign new value
-				vertices [i] = new Vector3 (xf, vertex.y, vertex.z);
+				float percent_y = y / half_height; //Percent along y wrt half_height
+				float phase = percent_y * Mathf.PI; //Cooresponding radian phase representation
+
+				float dx = dx_max * Mathf.Sin (phase); //Amount to shift x accourding to y
+				float xf = x + dx; //Instantiate the change to the vertex
+
+				
+				vertices [i] = new Vector3 (xf, vertex.y, vertex.z); //Assign new value
 				//Both the top and bottom of the object 
 				//should appear to be unchanged
 			}
 			mesh.vertices = vertices;
 			effectActive = true;
 		}
+	}
+
+
+	public void ResetSinusoid() {
+		//TODO: Implement the reverse calculation
+		Debug.Log("ResetSinusoid() is being called but has not been written yet! MeshSinusoid.cs");
 	}
 }
