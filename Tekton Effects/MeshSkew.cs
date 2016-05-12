@@ -24,50 +24,56 @@ public class MeshSkew : MonoBehaviour {
 
 		Mesh mesh = GetComponent<MeshFilter>().mesh;
 		Vector3[] vertices = mesh.vertices;
+
 		for (int i = 0; i < vertices.Length; i++) {
-			if (vertices[i].x < minX) {
-				minX = vertices[i].x;
-			} 
-			if (vertices[i].x > maxX){
-				maxX = vertices[i].x;
-			}
-			if (vertices[i].y < minY) {
-				minY = vertices[i].y;
-			} 
-			if (vertices[i].y > maxY){
-				maxY = vertices[i].y;
-			}
-			if (vertices[i].z < minZ) {
-				minZ = vertices[i].z;
-			} 
-			if (vertices[i].y > maxZ){
-				maxZ = vertices[i].z;
-			}
+			if (vertices[i].x < minX) { minX = vertices[i].x; } 
+			if (vertices[i].x > maxX) { maxX = vertices[i].x; }
+			if (vertices[i].y < minY) {	minY = vertices[i].y; } 
+			if (vertices[i].y > maxY) { maxY = vertices[i].y; }
+			if (vertices[i].z < minZ) { minZ = vertices[i].z; } 
+			if (vertices[i].y > maxZ) { maxZ = vertices[i].z; }
 		}
 
 		objMaxX = Mathf.Abs (maxX) + Mathf.Abs (minX);
 		objMaxY = Mathf.Abs (maxY) + Mathf.Abs (minY);
 		objMaxZ = Mathf.Abs (maxZ) + Mathf.Abs (minZ);
-
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		skew ();
+		
 	}
 
-	public void skew() {
+
+	public void Skew() {
 		if (!skewed) {
 			Mesh mesh = GetComponent<MeshFilter> ().mesh;
 			Vector3[] vertices = mesh.vertices;
 
 			for (int i = 0; i < vertices.Length; i++) {
-
 				vertices [i] += new Vector3 (vertices [i].x + (effectStrength / objMaxY/2) * vertices[i].y, 0.0f, 0.0f);
-			} 
+			}
+
 			mesh.vertices = vertices;
 			mesh.RecalculateBounds ();
 			skewed = true;
+		}
+	}
+
+
+	//Perform the skewing calculation in reverse to return the mesh to it's starting state
+	public void ResetSkew() {
+		if (skewed) {
+			Mesh mesh = GetComponent<MeshFilter> ().mesh;
+			Vector3[] vertices = mesh.vertices;
+
+			for (int i = 0; i < vertices.Length; i++) {
+				vertices [i] -= new Vector3 (vertices [i].x + (effectStrength / objMaxY/2) * vertices[i].y, 0.0f, 0.0f);
+			}
+
+			mesh.vertices = vertices;
+			mesh.RecalculateBounds ();
+			skewed = false;
 		}
 	}
 }
