@@ -79,8 +79,8 @@ public class 2Sphere : MonoBehaviour {
 			z = z/(objMaxZ/2.0f)
 			// Map the verticies to a unit sphere via magic:
 			xp = x*Mathf.Sqrt(1.0f - (Mathf.Pow(y,2)/2.0f) -(Mathf.Pow(z,2)/2.0f) - ((Mathf.Pow(y,2)*Mathf.Pow(z,2))/3.0f))
-			yp = y*Mathf.Sqrt(1.0f - (Mathf.Pow(z,2)/2.0f) -(Mathf.Pow(x,2)/2.0f) - ((Mathf.Pow(z,2)*Mathf.Pow(x,2))/3.0f
-			xp = z*Mathf.Sqrt(1.0f - (Mathf.Pow(x,2)/2.0f) -(Mathf.Pow(y,2)/2.0f) - ((Mathf.Pow(x,2)*Mathf.Pow(y,2))/3.0f
+			yp = y*Mathf.Sqrt(1.0f - (Mathf.Pow(z,2)/2.0f) -(Mathf.Pow(x,2)/2.0f) - ((Mathf.Pow(z,2)*Mathf.Pow(x,2))/3.0f))
+			xp = z*Mathf.Sqrt(1.0f - (Mathf.Pow(x,2)/2.0f) -(Mathf.Pow(y,2)/2.0f) - ((Mathf.Pow(x,2)*Mathf.Pow(y,2))/3.0f))
 			//Dimensionalise and apply the tranformation
 			xf = xp * (objMaxX/2.0f)
 			yf = yp * (objMaxY/2.0f)
